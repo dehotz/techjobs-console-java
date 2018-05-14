@@ -72,13 +72,44 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+        //converting search term to lowercase for case-insensitivity
+        value.toLowerCase();
+
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = (row.get(column)).toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
             }
+        }
+
+        return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        //converting search term to lowercase for case-insensitivity
+        value.toLowerCase();
+
+        for (HashMap<String, String> row : allJobs) {
+
+            String aValuePosition = (row.get("position type")).toLowerCase();
+            String aValueName = (row.get("name")).toLowerCase();
+            String aValueEmployer = (row.get("employer")).toLowerCase();
+            String aValueLocation = (row.get("location")).toLowerCase();
+            String aValueCompetency = (row.get("core competency")).toLowerCase();
+
+            //checking all the values in this item for the keyword, if so then adding the row
+            if (aValuePosition.contains(value) || aValueName.contains(value) || aValueEmployer.contains(value) || aValueLocation.contains(value) || aValueCompetency.contains(value)) {
+                jobs.add(row);
+            }
+
         }
 
         return jobs;
